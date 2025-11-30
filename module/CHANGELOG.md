@@ -1,3 +1,6 @@
+# v1.2.1
+* Add close button
+
 # v1.2.0
 * Add multi-user support (@antoniu200)
 * refactor UserID selection and function
