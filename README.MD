@@ -1,4 +1,6 @@
-![WebUI Preview](https://raw.githubusercontent.com/sidex15/deviceidchanger/refs/heads/main/preview.png)
+![WebUI Preview](https://raw.githubusercontent.com/Sokolovskyyy/deviceidchanger/main/preview.png)
+![WebUI Preview 2](https://raw.githubusercontent.com/Sokolovskyyy/deviceidchanger/main/preview2.png)
+
 # DeviceID/SSAID Changer WebUI Module
 
 A simple WebUI Module to change SSAID/DeviceID on Rooted Android Devices with Apatch, KSU (And its forks), or Magisk.
@@ -10,22 +12,33 @@ The problem is that some of the DeviceID Changer apps are paid or free, but with
 
 This Module is designed to install as a module and use the WebUI for changing the DeviceID/SSAID. And since it's a module, you wouldn't worry about installing those apps that might cause detection by your banking app.
 
-<b>And it's FOSS!</b>
+**And it's FOSS!**
+
+## Features
+* Material Design 3 UI
+* Real app icons and names
+* Search by app name, package name or DeviceID
+* Multi-user (UID) support
+* Language switcher (EN / RU)
+* Theme switcher (System / Light / Dark / AMOLED)
+* Backup SSAID to /sdcard/
 
 ## For Magisk Users
 Use [KSU WebUI Standalone app by 5ec1cff](https://github.com/5ec1cff/KsuWebUIStandalone) or [MMRL](https://github.com/MMRLApp/MMRL)
 
 ## WebUI Not working?
-[Update your Android System WebView To latest version](https://play.google.com/store/apps/details?id=com.google.android.webview). if it's still not working, try to submit a github issue
+[Update your Android System WebView to the latest version](https://play.google.com/store/apps/details?id=com.google.android.webview). If it's still not working, try to submit a GitHub issue.
 
 ## Credits
-* [7.css by khang-nd](https://khang-nd.github.io/7.css)
-* [Frutiger Aero Wallpaper by /u/Jackaboyishere1](https://www.reddit.com/r/FrutigerAero/comments/1ayi7qp/frutiger_aero_wallpapers/)
+* Original module by [sidex15](https://github.com/sidex15/deviceidchanger)
+* MD3 WebUI redesign by [Sokolovskyyy](https://github.com/Sokolovskyyy)
 
-## Buy me some coffee ☕
+## Buy sidex15 some coffee ☕
 PayPal: `sidex15.official@gmail.com`
 <br>BTC: `1AVaRmoEivK94XRooqbbAgvzdTMA5cwGdc`
 <br>ETH (ERC20): `0xa52151ebd2718a00af9e1dfcacfb30e1d3a94860`
 <br>USDT (TRC20): `TAUbxzug7cygExFunhFBiG6ntmbJwz7Skn`
 <br>USDT (ERC20): `0xa52151ebd2718a00af9e1dfcacfb30e1d3a94860`
 
+## Subscripe on my telegram channel
+Telegram: [click](https://t.me/madebysokolovsky)
