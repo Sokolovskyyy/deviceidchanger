@@ -1,5 +1,4 @@
 ![WebUI Preview](https://raw.githubusercontent.com/Sokolovskyyy/deviceidchanger/main/preview.png)
-![WebUI Preview 2](https://raw.githubusercontent.com/Sokolovskyyy/deviceidchanger/main/preview2.png)
 
 # DeviceID/SSAID Changer WebUI Module
 
