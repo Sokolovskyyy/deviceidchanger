@@ -1,3 +1,7 @@
+# v1.3.0
+* Reboot bug fix
+* MD3 design!!!!!
+
 # v1.2.1
 * Add close button
 

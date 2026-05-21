@@ -1,126 +1,1209 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>DeviceID/SSAID Changer</title>
-  </head>
-  <body class="win7">
-    <div class="z-1 fixed top-0 left-0 w-full h-full flex justify-center pt-16" id="dialog-div" hidden>
-      <dialog class="window active" open>
-          <div class="title-bar">
-            <div class="title-bar-text">DeviceID/SSAID Changer</div>
-            <div class="title-bar-controls">
-              <button aria-label="Close" id="dialog-close1"></button>
-            </div>
-          </div>
-          <div class="window-body">
-            <div class="flex items-center gap-2 p-5 bg-white overflow-auto">
-              <img src="/src/info.ico" alt="Icon" class="w-10 h-10" />
-              <p id="dialog-msg">DeviceID/SSAID Changed Successfully</p>
-            </div>
-            <div class="flex justify-end px-3 py-3">
-              <button id="dialog-close2">Close</button>
-            </div>
-          </div>
-      </dialog>
-    </div>
-    <main class="min-h-screen relative overflow-auto text-base">
-      <div id="app" class="flex flex-col items-center p-4 sm:p-10 gap-5">
-        <script type="module" src="/src/main.js"></script>
-        <div class="window active w-full max-w-lg">
-          <div class="title-bar">
-            <div class="title-bar-text">DeviceID/SSAID Changer</div>
-            <div class="title-bar-controls">
-              <button aria-label="Minimize"></button>
-              <button aria-label="Maximize"></button>
-              <button aria-label="Close" onclick="ksu.exec(`input keyevent 4`)"></button>
-            </div>
-          </div>
-          <div class="window-body">
-            <ul role="menubar">
-              <li role="menuitem" tabindex="0" aria-haspopup="true">
-                File
-                <ul role="menu">
-                  <li role="menuitem">
-                    <a id="backup-settings">
-                      Backup settings_ssaid.xml
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              <li role="menuitem" tabindex="0" aria-haspopup="true">
-                Help
-                <ul role="menu">
-                  <li role="menuitem"><a id="open-donate">Donate</a></li>
-                  <li role="menuitem"><a id="open-about">About</a></li>
-                </ul>
-              </li>
-            </ul>
-            <div class="flex flex-col gap-2 w-full p-2">
-			  <div class="field-row w-full items-center">
-        <div class="ml-auto flex items-center gap-2">
-				  <label for="uid-select" class="m-0 leading-6">UserID</label>
-				  <select id="uid-select" class="h-6 min-w-[80px]"></select>
-				</div>
-				<label for="app-pkg" class="m-0 leading-6">App Package Name</label>
-			  </div>
-              <select id="app-pkg" size="1" class="w-full max-w-xs">
-                <option value="">Select an app</option>
-              </select>
-              <label for="ssaid-value" class="whitespace-nowrap">DeviceID/SSAID</label>
-              <div class="raw flex-1 w-full">
-                <input id="ssaid-value" type="text" aria-describedby="balloon-text" class="w-full text-sm" />
-                <div role="tooltip" class="z-1 mt-4" id="balloon-text" hidden>Must be hexadecimal and exactly 16 characters in length.</div>
-              </div>
-              <div class="flex flex-row items-start sm:items-center gap-2 w-full">
-                <button id="randomize-ssaid" type="button" class="whitespace-nowrap">Randomize</button>
-                <button id="default-ssaid" type="button" class="whitespace-nowrap">Default Value</button>
-              </div>
-              <div class="flex flex-row items-start sm:items-center gap-2 w-full">
-                <button id="apply-ssaid" type="button" class="w-full sm:w-auto self-center">Apply</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="window active w-full max-w-lg sm:w-max" id="about-window" hidden>
-          <div class="title-bar">
-            <div class="title-bar-text">About</div>
-            <div class="title-bar-controls">
-              <button aria-label="Close" id="close-about"></button>
-            </div>
-          </div>
-          <div class="window-body has-space">
-            <div class="flex flex-col items-center gap-2">
-              <p class="text-lg">DeviceID/SSAID Changer</p>
-              <p class="text-sm">Version 1.1.0</p>
-              <p class="text-sm text-center">A simple WebUI Module to change SSAID/DeviceID on Android devices.</p>
-              <p class="text-sm text-center">GNU Affero General Public License Version 3</p>
-              <p class="text-sm text-center">Wallpaper by <a target="_blank" onclick="ksu.exec(`am start -a android.intent.action.VIEW -d https://www.reddit.com/r/FrutigerAero/comments/1ayi7qp/frutiger_aero_wallpapers/`)">/u/Jackaboyishere1</a></p>
-              <p class="text-sm text-center">Styled using <a target="_blank" onclick="ksu.exec(`am start -a android.intent.action.VIEW -d https://khang-nd.github.io/7.css`)">7.css by khang-nd</a></p>
-              <p class="text-sm text-center">2025 sidex15</p>
-            </div>
-          </div>
-        </div>
-        <div class="window active w-full max-w-lg sm:w-max" id="donate-window" hidden>
-          <div class="title-bar">
-            <div class="title-bar-text">Donate</div>
-            <div class="title-bar-controls">
-              <button aria-label="Close" id="close-donate"></button>
-            </div>
-          </div>
-          <div class="window-body has-space">
-            <div class="flex flex-col items-center gap-2">
-              <p class="text-lg">Buy me some coffee ☕</p>
-              <p class="text-sm text-center">PayPal: sidex15.official@gmail.com</p>
-              <p class="text-sm text-center">BTC: 1AVaRmoEivK94XRooqbbAgvzdTMA5cwGdc</p>
-              <p class="text-sm text-center">ETH (ERC20): 0xa52151ebd2718a00af9e1dfcacfb30e1d3a94860</p>
-              <p class="text-sm text-center">USDT (TRC20): TAUbxzug7cygExFunhFBiG6ntmbJwz7Skn</p>
-              <p class="text-sm text-center">USDT (ERC20): 0xa52151ebd2718a00af9e1dfcacfb30e1d3a94860</p>
-            </div>
-          </div>
-        </div>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DeviceID Changer</title>
+
+  <script type="importmap">{"imports":{"@material/web/":"https://esm.run/@material/web/"}}</script>
+  <script type="module">import '@material/web/all.js';</script>
+
+  <link rel="stylesheet" href="https://mui.kernelsu.org/internal/insets.css">
+  <link rel="stylesheet" href="https://mui.kernelsu.org/internal/colors.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0">
+
+  <style>
+    :root {
+      --top-inset:    var(--window-inset-top, 0px);
+      --bottom-inset: var(--window-inset-bottom, 0px);
+      --md-focus-ring-color: transparent;
+      --md-sys-color-primary:                   var(--primary,                 #6750A4);
+      --md-sys-color-on-primary:                var(--onPrimary,               #FFFFFF);
+      --md-sys-color-primary-container:         var(--primaryContainer,        #EADDFF);
+      --md-sys-color-on-primary-container:      var(--onPrimaryContainer,      #21005D);
+      --md-sys-color-secondary:                 var(--secondary,               #625B71);
+      --md-sys-color-on-secondary:              var(--onSecondary,             #FFFFFF);
+      --md-sys-color-secondary-container:       var(--secondaryContainer,      #E8DEF8);
+      --md-sys-color-on-secondary-container:    var(--onSecondaryContainer,    #1D192B);
+      --md-sys-color-error:                     var(--error,                   #B3261E);
+      --md-sys-color-on-error:                  var(--onError,                 #FFFFFF);
+      --md-sys-color-error-container:           var(--errorContainer,          #F9DEDC);
+      --md-sys-color-on-error-container:        var(--onErrorContainer,        #410E0B);
+      --md-sys-color-background:                var(--background,              #FEF7FF);
+      --md-sys-color-on-background:             var(--onBackground,            #1D1B20);
+      --md-sys-color-surface:                   var(--surface,                 #FEF7FF);
+      --md-sys-color-on-surface:                var(--onSurface,               #1D1B20);
+      --md-sys-color-surface-variant:           var(--surfaceVariant,          #E7E0EC);
+      --md-sys-color-on-surface-variant:        var(--onSurfaceVariant,        #49454F);
+      --md-sys-color-outline:                   var(--outline,                 #79747E);
+      --md-sys-color-outline-variant:           var(--outlineVariant,          #CAC4D0);
+      --md-sys-color-inverse-surface:           var(--inverseSurface,          #322F35);
+      --md-sys-color-inverse-on-surface:        var(--inverseOnSurface,        #F5EFF7);
+      --md-sys-color-inverse-primary:           var(--inversePrimary,          #D0BCFF);
+      --md-sys-color-surface-container:         var(--surfaceContainer,        #F3EDF7);
+      --md-sys-color-surface-container-lowest:  var(--surfaceContainerLowest,  #FFFFFF);
+      --md-sys-color-surface-container-low:     var(--surfaceContainerLow,     #F7F2FA);
+      --md-sys-color-surface-container-high:    var(--surfaceContainerHigh,    #ECE6F0);
+      --md-sys-color-surface-container-highest: var(--surfaceContainerHighest, #E6E0E9);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --md-sys-color-primary:                   var(--primary,                 #D0BCFF);
+        --md-sys-color-on-primary:                var(--onPrimary,               #381E72);
+        --md-sys-color-primary-container:         var(--primaryContainer,        #4F378B);
+        --md-sys-color-on-primary-container:      var(--onPrimaryContainer,      #EADDFF);
+        --md-sys-color-secondary:                 var(--secondary,               #CCC2DC);
+        --md-sys-color-on-secondary:              var(--onSecondary,             #332D41);
+        --md-sys-color-secondary-container:       var(--secondaryContainer,      #4A4458);
+        --md-sys-color-on-secondary-container:    var(--onSecondaryContainer,    #E8DEF8);
+        --md-sys-color-error:                     var(--error,                   #F2B8B5);
+        --md-sys-color-on-error:                  var(--onError,                 #601410);
+        --md-sys-color-error-container:           var(--errorContainer,          #8C1D18);
+        --md-sys-color-on-error-container:        var(--onErrorContainer,        #F9DEDC);
+        --md-sys-color-background:                var(--background,              #141218);
+        --md-sys-color-on-background:             var(--onBackground,            #E6E0E9);
+        --md-sys-color-surface:                   var(--surface,                 #141218);
+        --md-sys-color-on-surface:                var(--onSurface,               #E6E0E9);
+        --md-sys-color-surface-variant:           var(--surfaceVariant,          #49454F);
+        --md-sys-color-on-surface-variant:        var(--onSurfaceVariant,        #CAC4D0);
+        --md-sys-color-outline:                   var(--outline,                 #938F99);
+        --md-sys-color-outline-variant:           var(--outlineVariant,          #49454F);
+        --md-sys-color-inverse-surface:           var(--inverseSurface,          #E6E0E9);
+        --md-sys-color-inverse-on-surface:        var(--inverseOnSurface,        #322F35);
+        --md-sys-color-inverse-primary:           var(--inversePrimary,          #6750A4);
+        --md-sys-color-surface-container:         var(--surfaceContainer,        #211F26);
+        --md-sys-color-surface-container-lowest:  var(--surfaceContainerLowest,  #0F0D13);
+        --md-sys-color-surface-container-low:     var(--surfaceContainerLow,     #1D1B20);
+        --md-sys-color-surface-container-high:    var(--surfaceContainerHigh,    #2B2930);
+        --md-sys-color-surface-container-highest: var(--surfaceContainerHighest, #36343B);
+      }
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding-top: calc(64px + var(--top-inset));
+      padding-bottom: calc(var(--bottom-inset) + 80px);
+      background-color: var(--md-sys-color-background);
+      color: var(--md-sys-color-on-background);
+      font-family: 'Google Sans', Roboto, system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      transition: opacity .2s;
+    }
+    body[unresolved] { opacity: 0; overflow: hidden; }
+
+    /* Header */
+    .header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      display: flex;
+      align-items: center;
+      padding: 0 4px;
+      padding-top: var(--top-inset);
+      height: calc(64px + var(--top-inset));
+      background-color: var(--md-sys-color-surface);
+      z-index: 10;
+      transition: background-color .25s;
+      -webkit-user-select: none; user-select: none;
+    }
+    .header.scrolled { /* no visual change on scroll */ }
+    #title {
+      flex: 1;
+      padding-left: 12px;
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--md-sys-color-on-surface);
+      pointer-events: none;
+    }
+    #lang-btn { --md-icon-button-icon-color: var(--md-sys-color-on-surface-variant); }
+    #menu-btn  { --md-icon-button-icon-color: var(--md-sys-color-on-surface); }
+
+    /* Search */
+    .search-bar {
+      position: sticky;
+      top: calc(64px + var(--top-inset));
+      z-index: 9;
+      padding: 8px 16px 10px;
+      background-color: var(--md-sys-color-surface);
+      border-bottom: 1px solid var(--md-sys-color-outline-variant);
+    }
+    #search-field {
+      width: 100%;
+      --md-outlined-text-field-container-shape: 28px;
+    }
+
+    /* UID chips */
+    .uid-strip {
+      position: sticky;
+      top: calc(64px + var(--top-inset) + 66px);
+      z-index: 8;
+      display: none;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 8px 16px;
+      background-color: var(--md-sys-color-surface-container-low);
+      border-bottom: 1px solid var(--md-sys-color-outline-variant);
+    }
+    .uid-strip.visible { display: flex; }
+    .uid-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      background-color: var(--md-sys-color-surface-container);
+      color: var(--md-sys-color-on-surface-variant);
+      font-size: 13px;
+      cursor: pointer;
+      border: 1px solid var(--md-sys-color-outline-variant);
+      transition: background-color .15s, color .15s;
+      -webkit-user-select: none; user-select: none;
+    }
+    .uid-chip.active {
+      background-color: var(--md-sys-color-secondary-container);
+      color: var(--md-sys-color-on-secondary-container);
+      border-color: transparent;
+    }
+    .uid-chip .material-symbols-outlined { font-size: 16px; }
+
+    /* App list */
+    #apps-list { padding: 8px 0 0; }
+
+    .card-box { display: flex; justify-content: center; }
+    .card {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      width: calc(100% - 32px);
+      max-width: 900px;
+      margin: 0 auto 4px;
+      padding: 12px 16px;
+      border-radius: 16px;
+      background-color: var(--md-sys-color-surface-container);
+      cursor: pointer;
+      overflow: hidden;
+      -webkit-user-select: none; user-select: none;
+      transition: background-color .15s;
+    }
+    .card:active { background-color: var(--md-sys-color-surface-container-high); }
+
+    /* Icon */
+    .icon-wrap { position: relative; width: 48px; height: 48px; flex-shrink: 0; }
+    .app-icon {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity .3s;
+      position: absolute; inset: 0;
+    }
+    .app-icon.loaded { opacity: 1; }
+    .letter-avatar {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 12px;
+      font-size: 20px; font-weight: 600; color: #fff;
+      transition: opacity .2s;
+    }
+    .letter-avatar.hidden { opacity: 0; }
+
+    /* Text */
+    .app-text { flex: 1; min-width: 0; }
+    .app-name {
+      display: block;
+      font-size: 15px; font-weight: 500;
+      color: var(--md-sys-color-on-surface);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .pkg-name {
+      display: block;
+      font-size: 12px;
+      color: var(--md-sys-color-outline);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      margin-top: 2px;
+    }
+    /* ssaid badge — only visible when searching by ssaid */
+    .ssaid-badge {
+      display: none;
+      font-size: 11px;
+      font-family: monospace;
+      color: var(--md-sys-color-primary);
+      margin-top: 3px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .ssaid-badge.show { display: block; }
+
+    .card-chevron {
+      color: var(--md-sys-color-outline);
+      font-size: 20px; flex-shrink: 0;
+    }
+
+    /* Empty */
+    .empty-state {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 12px;
+      padding: 80px 32px;
+      color: var(--md-sys-color-on-surface-variant);
+      -webkit-user-select: none; user-select: none;
+    }
+    .empty-icon { font-size: 56px; opacity: .4; }
+    .empty-text { font-size: 16px; opacity: .65; text-align: center; }
+
+    /* Loading */
+    .loading {
+      position: fixed; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      background-color: var(--md-sys-color-surface);
+      z-index: 50;
+      transition: opacity .3s;
+    }
+    .loading-inner {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 20px;
+      color: var(--md-sys-color-on-surface-variant);
+    }
+    .loading-spinner {
+      width: 40px; height: 40px;
+      border: 3px solid var(--md-sys-color-outline-variant);
+      border-top-color: var(--md-sys-color-primary);
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading.fade-out { opacity: 0; pointer-events: none; }
+
+    /* Snackbar */
+    #prompt {
+      position: fixed;
+      bottom: calc(var(--bottom-inset) + 24px);
+      left: 50%; transform: translateX(-50%) translateY(20px);
+      background-color: var(--md-sys-color-inverse-surface);
+      color: var(--md-sys-color-inverse-on-surface);
+      padding: 12px 20px;
+      border-radius: 6px;
+      font-size: 14px;
+      max-width: calc(100vw - 32px);
+      opacity: 0; z-index: 99;
+      transition: opacity .25s, transform .25s;
+      pointer-events: none;
+      white-space: pre-line;
+    }
+    #prompt.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    #prompt.error {
+      background-color: var(--md-sys-color-error-container);
+      color: var(--md-sys-color-on-error-container);
+    }
+
+    /* Dialogs */
+    md-dialog { --md-dialog-container-color: var(--md-sys-color-surface-container-high); }
+    [slot="headline"] { -webkit-user-select: none; user-select: none; }
+
+    /* Edit dialog */
+    #edit-dialog { width: min(480px, calc(100vw - 32px)); }
+    .edit-headline { display: flex; align-items: center; gap: 12px; }
+    .edit-icon-wrap { position: relative; width: 40px; height: 40px; flex-shrink: 0; }
+    .edit-icon-img {
+      width: 40px; height: 40px;
+      border-radius: 10px; object-fit: cover;
+      opacity: 0; transition: opacity .3s;
+      position: absolute; inset: 0;
+    }
+    .edit-icon-img.loaded { opacity: 1; }
+    .edit-letter {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 10px;
+      font-size: 18px; font-weight: 600; color: #fff;
+      transition: opacity .2s;
+    }
+    .edit-letter.hidden { opacity: 0; }
+    .edit-title-block { flex: 1; min-width: 0; }
+    .edit-app-name {
+      font-size: 17px; font-weight: 500;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .edit-pkg-name {
+      font-size: 11px; color: var(--md-sys-color-outline);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      margin-top: 1px;
+    }
+    .edit-content { display: flex; flex-direction: column; gap: 14px; padding-top: 4px; }
+    #ssaid-field {
+      width: 100%;
+      --md-outlined-text-field-container-shape: 10px;
+      --md-outlined-text-field-input-text-font: monospace;
+    }
+    .ssaid-hint { font-size: 12px; color: var(--md-sys-color-outline); margin-top: -8px; }
+    .ssaid-btn-row { display: flex; gap: 8px; }
+    .ssaid-btn-row md-outlined-button { flex: 1; }
+
+    /* FAQ */
+    .faq-item { margin-bottom: 20px; }
+    .faq-q { font-weight: 600; font-size: 14px; color: var(--md-sys-color-primary); margin-bottom: 4px; }
+    .faq-a { font-size: 13px; color: var(--md-sys-color-on-surface-variant); line-height: 1.6; }
+
+    /* About */
+    .about-body { display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; }
+    .about-title { font-size: 18px; font-weight: 500; }
+    .about-ver { font-size: 12px; color: var(--md-sys-color-outline); }
+    .about-desc { font-size: 13px; margin-top: 8px; line-height: 1.5; }
+
+    .menu { position: relative; }
+
+    html[data-theme="light"] {
+      color-scheme: light;
+      --md-sys-color-primary:                   #6750A4;
+      --md-sys-color-on-primary:                #FFFFFF;
+      --md-sys-color-primary-container:         #EADDFF;
+      --md-sys-color-on-primary-container:      #21005D;
+      --md-sys-color-secondary:                 #625B71;
+      --md-sys-color-on-secondary:              #FFFFFF;
+      --md-sys-color-secondary-container:       #E8DEF8;
+      --md-sys-color-on-secondary-container:    #1D192B;
+      --md-sys-color-error:                     #B3261E;
+      --md-sys-color-on-error:                  #FFFFFF;
+      --md-sys-color-error-container:           #F9DEDC;
+      --md-sys-color-on-error-container:        #410E0B;
+      --md-sys-color-background:                #FEF7FF;
+      --md-sys-color-on-background:             #1D1B20;
+      --md-sys-color-surface:                   #FEF7FF;
+      --md-sys-color-on-surface:                #1D1B20;
+      --md-sys-color-surface-variant:           #E7E0EC;
+      --md-sys-color-on-surface-variant:        #49454F;
+      --md-sys-color-outline:                   #79747E;
+      --md-sys-color-outline-variant:           #CAC4D0;
+      --md-sys-color-inverse-surface:           #322F35;
+      --md-sys-color-inverse-on-surface:        #F5EFF7;
+      --md-sys-color-inverse-primary:           #D0BCFF;
+      --md-sys-color-surface-container:         #F3EDF7;
+      --md-sys-color-surface-container-lowest:  #FFFFFF;
+      --md-sys-color-surface-container-low:     #F7F2FA;
+      --md-sys-color-surface-container-high:    #ECE6F0;
+      --md-sys-color-surface-container-highest: #E6E0E9;
+    }
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --md-sys-color-primary:                   #D0BCFF;
+      --md-sys-color-on-primary:                #381E72;
+      --md-sys-color-primary-container:         #4F378B;
+      --md-sys-color-on-primary-container:      #EADDFF;
+      --md-sys-color-secondary:                 #CCC2DC;
+      --md-sys-color-on-secondary:              #332D41;
+      --md-sys-color-secondary-container:       #4A4458;
+      --md-sys-color-on-secondary-container:    #E8DEF8;
+      --md-sys-color-error:                     #F2B8B5;
+      --md-sys-color-on-error:                  #601410;
+      --md-sys-color-error-container:           #8C1D18;
+      --md-sys-color-on-error-container:        #F9DEDC;
+      --md-sys-color-background:                #141218;
+      --md-sys-color-on-background:             #E6E0E9;
+      --md-sys-color-surface:                   #141218;
+      --md-sys-color-on-surface:                #E6E0E9;
+      --md-sys-color-surface-variant:           #49454F;
+      --md-sys-color-on-surface-variant:        #CAC4D0;
+      --md-sys-color-outline:                   #938F99;
+      --md-sys-color-outline-variant:           #49454F;
+      --md-sys-color-inverse-surface:           #E6E0E9;
+      --md-sys-color-inverse-on-surface:        #322F35;
+      --md-sys-color-inverse-primary:           #6750A4;
+      --md-sys-color-surface-container:         #211F26;
+      --md-sys-color-surface-container-lowest:  #0F0D13;
+      --md-sys-color-surface-container-low:     #1D1B20;
+      --md-sys-color-surface-container-high:    #2B2930;
+      --md-sys-color-surface-container-highest: #36343B;
+    }
+    html[data-theme="amoled"] {
+      color-scheme: dark;
+      --md-sys-color-primary:                   #D0BCFF;
+      --md-sys-color-on-primary:                #381E72;
+      --md-sys-color-primary-container:         #3A2860;
+      --md-sys-color-on-primary-container:      #EADDFF;
+      --md-sys-color-secondary:                 #CCC2DC;
+      --md-sys-color-on-secondary:              #332D41;
+      --md-sys-color-secondary-container:       #33303E;
+      --md-sys-color-on-secondary-container:    #E8DEF8;
+      --md-sys-color-error:                     #F2B8B5;
+      --md-sys-color-on-error:                  #601410;
+      --md-sys-color-error-container:           #6B1512;
+      --md-sys-color-on-error-container:        #F9DEDC;
+      --md-sys-color-background:                #000000;
+      --md-sys-color-on-background:             #E6E0E9;
+      --md-sys-color-surface:                   #000000;
+      --md-sys-color-on-surface:                #E6E0E9;
+      --md-sys-color-surface-variant:           #2A2830;
+      --md-sys-color-on-surface-variant:        #CAC4D0;
+      --md-sys-color-outline:                   #6E6A75;
+      --md-sys-color-outline-variant:           #2A2830;
+      --md-sys-color-inverse-surface:           #E6E0E9;
+      --md-sys-color-inverse-on-surface:        #322F35;
+      --md-sys-color-inverse-primary:           #6750A4;
+      --md-sys-color-surface-container:         #0D0B12;
+      --md-sys-color-surface-container-lowest:  #000000;
+      --md-sys-color-surface-container-low:     #050408;
+      --md-sys-color-surface-container-high:    #131118;
+      --md-sys-color-surface-container-highest: #1A1820;
+    }
+
+    .theme-options { display: flex; flex-direction: column; }
+    .theme-option {
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 0; cursor: pointer;
+      font-size: 15px; color: var(--md-sys-color-on-surface);
+    }
+  </style>
+</head>
+<body unresolved>
+
+<!-- Loading -->
+<div class="loading" id="loading">
+  <div class="loading-inner">
+    <div class="loading-spinner"></div>
+    <span id="loading-text">Loading…</span>
+  </div>
+</div>
+
+<!-- Header -->
+<div class="header" id="header">
+  <div id="title">DeviceID Changer</div>
+  <md-icon-button id="lang-btn" title="Switch language">
+    <md-icon>language</md-icon>
+  </md-icon-button>
+  <div class="menu">
+    <md-icon-button id="menu-btn"><md-icon>more_vert</md-icon></md-icon-button>
+    <md-menu id="menu-popup" anchor="menu-btn">
+      <md-menu-item id="menu-theme">
+        <md-icon slot="start">palette</md-icon>
+        <div slot="headline" data-i18n="menu_theme">Theme</div>
+      </md-menu-item>
+      <md-divider role="separator" tabindex="-1"></md-divider>
+      <md-menu-item id="menu-backup">
+        <md-icon slot="start">backup</md-icon>
+        <div slot="headline" data-i18n="menu_backup">Backup SSAID</div>
+      </md-menu-item>
+      <md-divider role="separator" tabindex="-1"></md-divider>
+      <md-menu-item id="menu-faq">
+        <md-icon slot="start">help_outline</md-icon>
+        <div slot="headline" data-i18n="menu_faq">FAQ</div>
+      </md-menu-item>
+      <md-menu-item id="menu-about">
+        <md-icon slot="start">info</md-icon>
+        <div slot="headline" data-i18n="menu_about">About</div>
+      </md-menu-item>
+    </md-menu>
+  </div>
+</div>
+
+<!-- Search -->
+<div class="search-bar">
+  <md-outlined-text-field id="search-field"
+    data-i18n-placeholder="search_placeholder"
+    placeholder="Search apps…">
+    <md-icon slot="leading-icon">search</md-icon>
+    <md-icon slot="trailing-icon" id="search-clear" style="cursor:pointer;display:none">close</md-icon>
+  </md-outlined-text-field>
+</div>
+
+<!-- UID strip -->
+<div class="uid-strip" id="uid-strip"></div>
+
+<!-- App list -->
+<div id="apps-list"></div>
+
+<!-- Snackbar -->
+<div id="prompt"></div>
+
+<!-- Card template -->
+<template id="card-tpl">
+  <div class="card-box">
+    <div class="card" data-pkg="">
+      <md-ripple></md-ripple>
+      <div class="icon-wrap">
+        <div class="letter-avatar"></div>
+        <img class="app-icon" src="" alt="" loading="lazy">
       </div>
-    </main>
-  </body>
+      <div class="app-text">
+        <span class="app-name"></span>
+        <span class="pkg-name"></span>
+        <span class="ssaid-badge"></span>
+      </div>
+      <span class="material-symbols-outlined card-chevron">chevron_right</span>
+    </div>
+  </div>
+</template>
+
+<!-- Edit dialog -->
+<md-dialog id="edit-dialog">
+  <div slot="headline">
+    <div class="edit-headline">
+      <div class="edit-icon-wrap">
+        <div class="edit-letter"></div>
+        <img class="edit-icon-img" src="" alt="">
+      </div>
+      <div class="edit-title-block">
+        <div class="edit-app-name" id="dlg-appname"></div>
+        <div class="edit-pkg-name" id="dlg-pkgname"></div>
+      </div>
+    </div>
+  </div>
+  <div slot="content">
+    <div class="edit-content">
+      <md-outlined-text-field id="ssaid-field"
+        maxlength="16" autocomplete="off" spellcheck="false"
+        data-i18n-label="ssaid_label" label="DeviceID / SSAID">
+      </md-outlined-text-field>
+      <div class="ssaid-hint" data-i18n="ssaid_hint">16 hex characters (0–9, a–f)</div>
+      <div class="ssaid-btn-row">
+        <md-outlined-button id="btn-randomize">
+          <md-icon slot="icon">shuffle</md-icon>
+          <span data-i18n="btn_randomize">Randomize</span>
+        </md-outlined-button>
+        <md-outlined-button id="btn-default">
+          <md-icon slot="icon">restart_alt</md-icon>
+          <span data-i18n="btn_default">Default</span>
+        </md-outlined-button>
+      </div>
+    </div>
+  </div>
+  <div slot="actions">
+    <md-text-button id="btn-cancel" data-i18n="btn_cancel">Cancel</md-text-button>
+    <md-filled-button id="btn-apply">
+      <md-icon slot="icon">check</md-icon>
+      <span data-i18n="btn_apply">Apply</span>
+    </md-filled-button>
+  </div>
+</md-dialog>
+
+<!-- FAQ dialog -->
+<md-dialog id="faq-dialog">
+  <div slot="headline" data-i18n="faq_title">FAQ</div>
+  <div slot="content" id="faq-content"></div>
+  <div slot="actions">
+    <md-text-button id="faq-close" data-i18n="btn_close">Close</md-text-button>
+  </div>
+</md-dialog>
+
+<!-- About dialog -->
+<md-dialog id="about-dialog">
+  <div slot="headline" data-i18n="menu_about">About</div>
+  <div slot="content">
+    <div class="about-body">
+      <p class="about-title">DeviceID / SSAID Changer</p>
+      <p class="about-ver">v1.1.0 · sidex15 & sokolovsky</p>
+      <p class="about-desc" data-i18n="about_desc">Changes SSAID/DeviceID per app on rooted Android.<br>Works with KSU, APatch, Magisk.</p>
+    </div>
+  </div>
+  <div slot="actions">
+    <md-text-button id="about-close" data-i18n="btn_close">Close</md-text-button>
+  </div>
+</md-dialog>
+
+<!-- Theme dialog -->
+<md-dialog id="theme-dialog">
+  <div slot="headline" data-i18n="menu_theme">Theme</div>
+  <div slot="content">
+    <div class="theme-options">
+      <label class="theme-option">
+        <md-radio name="theme" value="system"></md-radio>
+        <span data-i18n="theme_system">System</span>
+      </label>
+      <label class="theme-option">
+        <md-radio name="theme" value="light"></md-radio>
+        <span data-i18n="theme_light">Light</span>
+      </label>
+      <label class="theme-option">
+        <md-radio name="theme" value="dark"></md-radio>
+        <span data-i18n="theme_dark">Dark</span>
+      </label>
+      <label class="theme-option">
+        <md-radio name="theme" value="amoled"></md-radio>
+        <span data-i18n="theme_amoled">AMOLED</span>
+      </label>
+    </div>
+  </div>
+  <div slot="actions">
+    <md-text-button id="theme-close" data-i18n="btn_close">Close</md-text-button>
+  </div>
+</md-dialog>
+
+<!-- Result dialog -->
+<md-dialog id="result-dialog">
+  <div slot="headline" id="result-title">Done</div>
+  <div slot="content">
+    <div id="result-msg" style="font-size:14px;line-height:1.6"></div>
+  </div>
+  <div slot="actions">
+    <md-text-button id="result-close" data-i18n="btn_later">Later</md-text-button>
+    <md-filled-button id="result-reboot" style="display:none">
+      <md-icon slot="icon">restart_alt</md-icon>
+      <span data-i18n="btn_reboot">Reboot</span>
+    </md-filled-button>
+  </div>
+</md-dialog>
+
+<script>
+/* ── i18n ── */
+const STRINGS = {
+  en: {
+    loading:            'Loading apps…',
+    search_placeholder: 'Search by name, package or DeviceID…',
+    menu_backup:        'Backup SSAID',
+    menu_faq:           'FAQ',
+    menu_about:         'About',
+    ssaid_label:        'DeviceID / SSAID',
+    ssaid_hint:         '16 hex characters (0–9, a–f)',
+    btn_randomize:      'Randomize',
+    btn_default:        'Default',
+    btn_cancel:         'Cancel',
+    btn_apply:          'Apply',
+    btn_close:          'Close',
+    btn_reboot:         'Reboot',
+    btn_later:          'Skip reboot',
+    btn_ok:             'OK',
+    menu_theme:         'Theme',
+    theme_system:       'System',
+    theme_light:        'Light',
+    theme_dark:         'Dark',
+    theme_amoled:       'AMOLED',
+    result_changed:     (pkg, val) => `SSAID for <b>${pkg}</b>\nchanged to <b>${val}</b>`,
+    result_backup:      path => `Backup saved to\n<b>${path}</b>`,
+    err_invalid:        'Must be exactly 16 hex characters',
+    err_noapp:          'App not found in SSAID data',
+    empty_text:         'No apps found',
+    uid_label:          uid => `User ${uid}`,
+    faq_title:          'FAQ',
+    about_desc:         'Changes SSAID/DeviceID per app on rooted Android.\nWorks with KSU, APatch, Magisk.',
+    faq: [
+      { q: 'What is SSAID / DeviceID?',
+        a: 'SSAID (Android ID) is a unique 64-bit hex identifier assigned to each app per user. Apps use it to track you. Changing it makes the app think it\'s on a different device.' },
+      { q: 'Do I need to reboot after applying?',
+        a: 'Yes — most apps need a reboot to pick up the new value. Some can be force-stopped instead.' },
+      { q: 'What does Randomize do?',
+        a: 'Generates a random valid 16-character hex string as the new SSAID.' },
+      { q: 'What does Default do?',
+        a: 'Restores the original SSAID that was assigned to the app on first install.' },
+      { q: 'Can I search by DeviceID?',
+        a: 'Yes — the search bar filters by app name, package name, and current SSAID value simultaneously.' },
+      { q: 'What is Backup SSAID?',
+        a: 'Copies the current settings_ssaid.xml to /sdcard/ so you can restore it manually.' },
+    ],
+  },
+  ru: {
+    loading:            'Загрузка приложений…',
+    search_placeholder: 'Поиск по имени, пакету или DeviceID…',
+    menu_backup:        'Резервная копия SSAID',
+    menu_faq:           'FAQ',
+    menu_about:         'О программе',
+    ssaid_label:        'DeviceID / SSAID',
+    ssaid_hint:         '16 hex символов (0–9, a–f)',
+    btn_randomize:      'Случайный',
+    btn_default:        'По умолчанию',
+    btn_cancel:         'Отмена',
+    btn_apply:          'Применить',
+    btn_close:          'Закрыть',
+    btn_reboot:         'Перезагрузка',
+    btn_later:          'Пропустить',
+    btn_ok:             'OK',
+    menu_theme:         'Тема',
+    theme_system:       'Системная',
+    theme_light:        'Светлая',
+    theme_dark:         'Тёмная',
+    theme_amoled:       'AMOLED',
+    result_changed:     (pkg, val) => `SSAID для <b>${pkg}</b>\nизменён на <b>${val}</b>`,
+    result_backup:      path => `Копия сохранена:\n<b>${path}</b>`,
+    err_invalid:        'Должно быть ровно 16 hex символов',
+    err_noapp:          'Приложение не найдено в данных SSAID',
+    empty_text:         'Приложения не найдены',
+    uid_label:          uid => `Пользователь ${uid}`,
+    faq_title:          'FAQ',
+    about_desc:         'Изменяет SSAID/DeviceID для каждого приложения на рутованном Android.\nРаботает с KSU, APatch, Magisk.',
+    faq: [
+      { q: 'Что такое SSAID / DeviceID?',
+        a: 'SSAID (Android ID) — уникальный 64-битный идентификатор, который Android присваивает каждому приложению. Приложения используют его для отслеживания. Смена ID заставляет приложение думать, что оно на другом устройстве.' },
+      { q: 'Нужна ли перезагрузка после применения?',
+        a: 'Да, большинству приложений нужна перезагрузка. Некоторым достаточно принудительной остановки.' },
+      { q: 'Что делает кнопка «Случайный»?',
+        a: 'Генерирует случайную корректную строку из 16 hex символов.' },
+      { q: 'Что делает «По умолчанию»?',
+        a: 'Восстанавливает исходный SSAID, присвоенный приложению при первой установке.' },
+      { q: 'Можно искать по DeviceID?',
+        a: 'Да — строка поиска фильтрует сразу по имени приложения, имени пакета и текущему значению SSAID.' },
+      { q: 'Что такое «Резервная копия SSAID»?',
+        a: 'Копирует settings_ssaid.xml на /sdcard/ для ручного восстановления.' },
+    ],
+  },
+};
+
+let lang = localStorage.getItem('dic_lang') || 'en';
+const t = (key, ...a) => { const v = STRINGS[lang][key]; return typeof v === 'function' ? v(...a) : (v || key); };
+
+function applyStrings() {
+  document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = t(el.dataset.i18n); });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => { el.placeholder = t(el.dataset.i18nPlaceholder); });
+  document.querySelectorAll('[data-i18n-label]').forEach(el => { el.label = t(el.dataset.i18nLabel); });
+  document.getElementById('loading-text').textContent = t('loading');
+  renderFaq();
+}
+function setLang(l) {
+  lang = l;
+  localStorage.setItem('dic_lang', l);
+  applyStrings();
+  // re-render list to update empty text if needed
+  renderList(document.getElementById('search-field').value);
+}
+
+/* ── KSU exec ── */
+let _idx = 0;
+function execCmd(cmd) {
+  return new Promise((res, rej) => {
+    const cb = `__cb_${Date.now()}_${_idx++}`;
+    window[cb] = (errno, stdout, stderr) => { res({ errno, stdout, stderr }); delete window[cb]; };
+    try { ksu.exec(cmd, '{}', cb); } catch (e) { res({ errno: 1, stdout: '', stderr: e.message || String(e) }); delete window[cb]; }
+  });
+}
+async function sh(cmd) {
+  try {
+    const { errno, stdout, stderr } = await execCmd(cmd);
+    if (errno !== 0) { console.warn('sh error:', cmd, stderr); return null; }
+    return stdout || '';
+  } catch (e) {
+    console.warn('sh exception:', e);
+    return null;
+  }
+}
+
+/* ── Icons ── */
+const iconCache = new Map();
+
+// Converts Java InputStream (from $packageManager.getApplicationIcon) to base64 data-URL
+// Exact pattern from TrickyAddon source
+async function fetchIcon(pkg) {
+  if (iconCache.has(pkg)) return iconCache.get(pkg);
+  let src = null;
+
+  // Method 1: ksu://icon/<pkg> — KSU native URL, browser fetches icon directly
+  try {
+    if (typeof ksu !== 'undefined' && ksu.listPackages !== undefined) {
+      src = 'ksu://icon/' + pkg;
+    }
+  } catch (_) {}
+
+  // Method 2: $packageManager InputStream → readChunk loop → base64
+  if (!src) {
+    try {
+      if (typeof $packageManager !== 'undefined') {
+        const stream = $packageManager.getApplicationIcon(pkg, 0, 0);
+        if (stream) src = await readInputStream(stream);
+      }
+    } catch (_) {}
+  }
+
+  if (src) iconCache.set(pkg, src);
+  return src;
+}
+
+function setupIconObserver() {
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const card = e.target;
+      const pkg  = card.dataset.pkg;
+      if (pkg) injectIcon(card.querySelector('.app-icon'), card.querySelector('.letter-avatar'), pkg);
+      obs.unobserve(card);
+    });
+  }, { rootMargin: '140px' });
+  document.querySelectorAll('.card[data-pkg]').forEach(c => obs.observe(c));
+}
+
+async function injectIcon(img, avatar, pkg) {
+  if (!img) return;
+  const src = await fetchIcon(pkg);
+  if (!src) return;
+  img.src    = src;
+  img.onload = () => { img.classList.add('loaded'); if (avatar) avatar.classList.add('hidden'); };
+}
+
+async function loadDialogIcon(pkg) {
+  const img    = document.querySelector('.edit-icon-img');
+  const letter = document.querySelector('.edit-letter');
+  const { bg, fg } = avatarColor(pkg);
+  letter.style.backgroundColor = bg; letter.style.color = fg;
+  letter.textContent = (pkgLabel(pkg)[0] || '?').toUpperCase();
+  letter.classList.remove('hidden');
+  img.classList.remove('loaded'); img.src = '';
+  const src = await fetchIcon(pkg);
+  if (src) { img.src = src; img.onload = () => { img.classList.add('loaded'); letter.classList.add('hidden'); }; }
+}
+
+/* ── Avatar colors ── */
+const COLORS = [
+  ['#E57373','#fff'],['#F06292','#fff'],['#BA68C8','#fff'],['#7986CB','#fff'],
+  ['#4FC3F7','#000'],['#4DB6AC','#000'],['#81C784','#000'],['#AED581','#000'],
+  ['#FFD54F','#000'],['#FF8A65','#fff'],['#90A4AE','#fff'],['#A1887F','#fff'],
+];
+function avatarColor(pkg) {
+  let h = 0;
+  for (let i = 0; i < pkg.length; i++) h = ((h << 5) - h + pkg.charCodeAt(i)) | 0;
+  const [bg, fg] = COLORS[Math.abs(h) % COLORS.length];
+  return { bg, fg };
+}
+
+/* ── Package → readable name (fallback only) ── */
+const SKIP = new Set(['android','app','apps','mobile','lite','beta','com','org','net','io','dev','official','debug','www']);
+function pkgLabelFallback(pkg) {
+  const parts = pkg.split('.');
+  for (let i = parts.length - 1; i >= 0; i--) {
+    const p = parts[i].toLowerCase();
+    if (!SKIP.has(p) && p.length > 1)
+      return parts[i].replace(/([a-z])([A-Z])/g, '$1 $2').replace(/^./, s => s.toUpperCase());
+  }
+  return parts[parts.length - 1] || pkg;
+}
+
+// Resolved display names cache
+const labelCache = new Map();
+function pkgLabel(pkg) {
+  return labelCache.get(pkg) || pkgLabelFallback(pkg);
+}
+
+// Batch-load real app names before rendering
+async function loadAllLabels(pkgs) {
+  if (!pkgs.length) return;
+  // Method 1: ksu.getPackagesInfo — sync batch API
+  try {
+    if (typeof ksu !== 'undefined' && ksu.getPackagesInfo) {
+      const raw = ksu.getPackagesInfo(JSON.stringify(pkgs));
+      const result = JSON.parse(raw);
+      if (Array.isArray(result)) {
+        result.forEach(r => { if (r && r.appLabel) labelCache.set(r.packageName, r.appLabel); });
+        return;
+      }
+    }
+  } catch (_) {}
+  // Method 2: $packageManager per-package
+  try {
+    if (typeof $packageManager !== 'undefined') {
+      for (const pkg of pkgs) {
+        try {
+          const info  = $packageManager.getApplicationInfo(pkg, 0, 0);
+          const label = info && info.getLabel ? info.getLabel() : null;
+          if (label) labelCache.set(pkg, label.toString());
+        } catch (_) {}
+      }
+    }
+  } catch (_) {}
+}
+
+/* ── SSAID XML ── */
+function parseXml(xml) {
+  const doc = new DOMParser().parseFromString(xml, 'text/xml');
+  const map = {};
+  doc.querySelectorAll('setting').forEach(el => {
+    const pkg = el.getAttribute('package');
+    map[pkg]  = {
+      ssaid:        el.getAttribute('value')        || '',
+      defaultValue: el.getAttribute('defaultValue') || '',
+    };
+  });
+  return map;
+}
+
+const MODULE_DIR  = '/data/adb/modules/deviceidchanger';
+const BACKUP_PATH = '/sdcard/settings_ssaid.xml';
+
+async function loadSettings(uid) {
+  const xmlPath = `/data/system/users/${uid}/settings_ssaid.xml`;
+  const abxPath = `${MODULE_DIR}/tmp/settings_ssaid.u${uid}.xml`;
+  const info    = await sh(`file "${xmlPath}"`);
+  const isText  = !!(info && info.includes('ASCII text'));
+  const xml     = isText
+    ? await sh(`cat "${xmlPath}"`)
+    : await sh(`abx2xml "${xmlPath}" "${abxPath}" ; cat "${abxPath}"`);
+  return { settings: xml ? parseXml(xml) : {}, isText, xmlPath, abxPath };
+}
+
+async function getUserIds() {
+  const out = await sh('cmd user list');
+  if (!out) return ['0'];
+  const ids = [...out.matchAll(/UserInfo\{(\d+):/g)].map(m => m[1]).sort();
+  return ids.length ? ids : ['0'];
+}
+
+/* ── State ── */
+const S = {
+  settings:   {},
+  isText:     false,
+  xmlPath:    '',
+  abxPath:    '',
+  uid:        localStorage.getItem('ssaid_uid') || '0',
+  activePkg:  null,
+  pkgs:       [],
+};
+
+/* ── Render list ── */
+function renderList(filter) {
+  const list  = document.getElementById('apps-list');
+  list.innerHTML = '';
+  const q     = (filter || '').trim().toLowerCase();
+  const isSsaidSearch = /^[0-9a-f]+$/.test(q) && q.length >= 4;
+
+  // Search: name, package name, SSAID value
+  const pkgs = q
+    ? S.pkgs.filter(pkg => {
+        const ssaid = (S.settings[pkg]?.ssaid || '').toLowerCase();
+        return pkg.toLowerCase().includes(q)
+          || pkgLabel(pkg).toLowerCase().includes(q)
+          || ssaid.includes(q);
+      })
+    : S.pkgs;
+
+  if (!pkgs.length) {
+    list.innerHTML = `
+      <div class="empty-state">
+        <span class="material-symbols-outlined empty-icon">phonelink_off</span>
+        <span class="empty-text">${t('empty_text')}</span>
+      </div>`;
+    return;
+  }
+
+  const tpl = document.getElementById('card-tpl');
+  for (const pkg of pkgs) {
+    const frag   = tpl.content.cloneNode(true);
+    const card   = frag.querySelector('.card');
+    const avatar = frag.querySelector('.letter-avatar');
+    const badge  = frag.querySelector('.ssaid-badge');
+
+    card.dataset.pkg = pkg;
+    frag.querySelector('.app-name').textContent = pkgLabel(pkg);
+    frag.querySelector('.pkg-name').textContent = pkg;
+
+    // Show SSAID badge when user searched by ssaid
+    const ssaid = S.settings[pkg]?.ssaid || '';
+    if (isSsaidSearch && ssaid.includes(q)) {
+      badge.textContent = ssaid;
+      badge.classList.add('show');
+    }
+
+    const { bg, fg } = avatarColor(pkg);
+    avatar.style.backgroundColor = bg;
+    avatar.style.color = fg;
+    avatar.textContent = (pkgLabel(pkg)[0] || '?').toUpperCase();
+
+    card.addEventListener('click', () => openEdit(pkg));
+    list.appendChild(frag);
+  }
+
+  setupIconObserver();
+}
+
+/* ── Edit dialog ── */
+function openEdit(pkg) {
+  S.activePkg = pkg;
+  const d = S.settings[pkg] || {};
+  document.getElementById('dlg-appname').textContent = pkgLabel(pkg);
+  document.getElementById('dlg-pkgname').textContent = pkg;
+  document.getElementById('ssaid-field').value     = d.ssaid || '';
+  document.getElementById('ssaid-field').error     = false;
+  document.getElementById('ssaid-field').errorText = '';
+  loadDialogIcon(pkg);
+  document.getElementById('edit-dialog').open = true;
+}
+
+/* ── Apply ── */
+async function applySSAID() {
+  const pkg = S.activePkg;
+  const val = (document.getElementById('ssaid-field').value || '').trim().toLowerCase();
+  if (!/^[0-9a-f]{16}$/.test(val)) {
+    document.getElementById('ssaid-field').error     = true;
+    document.getElementById('ssaid-field').errorText = t('err_invalid');
+    return;
+  }
+  document.getElementById('ssaid-field').error = false;
+  const prev = S.settings[pkg]?.ssaid;
+  if (!prev) { showPrompt(t('err_noapp'), true); return; }
+
+  if (S.isText) {
+    await sh(`sed -i 's/value="${prev}"/value="${val}"/' "${S.xmlPath}"`);
+  } else {
+    await sh(`sed -i 's/value="${prev}"/value="${val}"/' "${S.abxPath}"`);
+    await sh(`xml2abx "${S.abxPath}" "${S.xmlPath}"`);
+  }
+  await sh(`chmod 600 "${S.xmlPath}"`);
+  S.settings[pkg].ssaid = val;
+
+  document.getElementById('edit-dialog').open = false;
+  document.getElementById('result-title').textContent = t('btn_apply');
+  document.getElementById('result-msg').innerHTML = t('result_changed', pkg, val);
+  document.getElementById('result-reboot').style.display = 'inline-flex';
+  document.getElementById('result-close').textContent = t('btn_later');
+  document.getElementById('result-dialog').open = true;
+}
+
+/* ── FAQ ── */
+function renderFaq() {
+  const el = document.getElementById('faq-content');
+  if (!el) return;
+  el.innerHTML = STRINGS[lang].faq.map(item =>
+    `<div class="faq-item"><div class="faq-q">${item.q}</div><div class="faq-a">${item.a}</div></div>`
+  ).join('');
+}
+
+/* ── Snackbar ── */
+let _pt;
+const promptEl = document.getElementById('prompt');
+function showPrompt(msg, isError = false) {
+  promptEl.innerHTML = msg;
+  promptEl.classList.toggle('error', isError);
+  promptEl.classList.add('show');
+  clearTimeout(_pt);
+  _pt = setTimeout(() => promptEl.classList.remove('show'), 3500);
+}
+
+/* ── UID strip ── */
+function renderUidStrip(uids) {
+  const strip = document.getElementById('uid-strip');
+  strip.innerHTML = '';
+  if (uids.length < 2) return;
+  strip.classList.add('visible');
+  uids.forEach(uid => {
+    const chip = document.createElement('div');
+    chip.className = 'uid-chip' + (uid === S.uid ? ' active' : '');
+    chip.innerHTML = `<span class="material-symbols-outlined">person</span>${t('uid_label', uid)}`;
+    chip.addEventListener('click', async () => {
+      if (uid === S.uid) return;
+      S.uid = uid;
+      localStorage.setItem('ssaid_uid', uid);
+      strip.querySelectorAll('.uid-chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      await reloadSettings();
+    });
+    strip.appendChild(chip);
+  });
+}
+
+async function reloadSettings() {
+  document.getElementById('apps-list').innerHTML = '';
+  const { settings, isText, xmlPath, abxPath } = await loadSettings(S.uid);
+  Object.assign(S, { settings, isText, xmlPath, abxPath });
+  S.pkgs = Object.keys(settings).filter(p => p !== 'android').sort();
+  // Load real app names before rendering so they show on first paint
+  await loadAllLabels(S.pkgs);
+  renderList(document.getElementById('search-field').value);
+}
+
+/* ── Header scroll ── */
+window.addEventListener('scroll', () => {
+  document.getElementById('header').classList.toggle('scrolled', window.scrollY > 4);
+}, { passive: true });
+
+/* ── Search ── */
+const sf = document.getElementById('search-field');
+const sc = document.getElementById('search-clear');
+sf.addEventListener('input', () => {
+  sc.style.display = sf.value ? '' : 'none';
+  renderList(sf.value);
+});
+sc.addEventListener('click', () => { sf.value = ''; sc.style.display = 'none'; renderList(''); });
+
+/* ── Wiring ── */
+document.getElementById('lang-btn').addEventListener('click', () => setLang(lang === 'en' ? 'ru' : 'en'));
+document.getElementById('menu-btn').addEventListener('click', () => { document.getElementById('menu-popup').open = true; });
+
+document.getElementById('menu-backup').addEventListener('click', async () => {
+  document.getElementById('menu-popup').open = false;
+  await sh(`cp "${S.xmlPath}" "${BACKUP_PATH}"`);
+  document.getElementById('result-title').textContent = t('menu_backup');
+  document.getElementById('result-msg').innerHTML = t('result_backup', BACKUP_PATH);
+  document.getElementById('result-reboot').style.display = 'none';
+  document.getElementById('result-close').textContent = t('btn_ok');
+  document.getElementById('result-dialog').open = true;
+});
+document.getElementById('menu-faq').addEventListener('click', () => {
+  document.getElementById('menu-popup').open = false;
+  renderFaq();
+  document.getElementById('faq-dialog').open = true;
+});
+document.getElementById('menu-about').addEventListener('click', () => {
+  document.getElementById('menu-popup').open = false;
+  document.getElementById('about-dialog').open = true;
+});
+document.getElementById('faq-close').addEventListener('click', () => { document.getElementById('faq-dialog').open = false; });
+document.getElementById('about-close').addEventListener('click', () => { document.getElementById('about-dialog').open = false; });
+document.getElementById('btn-cancel').addEventListener('click', () => { document.getElementById('edit-dialog').open = false; });
+document.getElementById('btn-apply').addEventListener('click', applySSAID);
+document.getElementById('btn-randomize').addEventListener('click', () => {
+  const c = 'abcdef0123456789';
+  document.getElementById('ssaid-field').value = Array.from({length:16},()=>c[Math.floor(Math.random()*16)]).join('');
+  document.getElementById('ssaid-field').error = false;
+});
+document.getElementById('btn-default').addEventListener('click', () => {
+  const d = S.settings[S.activePkg];
+  if (d?.defaultValue) { document.getElementById('ssaid-field').value = d.defaultValue; document.getElementById('ssaid-field').error = false; }
+});
+document.getElementById('result-close').addEventListener('click', () => { document.getElementById('result-dialog').open = false; });
+document.getElementById('result-reboot').addEventListener('click', async () => {
+  document.getElementById('result-dialog').open = false;
+  await sh('reboot');
+});
+
+
+/* ── Theme ── */
+function applyTheme(theme) {
+  const html = document.documentElement;
+  if (theme === 'system') {
+    html.removeAttribute('data-theme');
+  } else {
+    html.setAttribute('data-theme', theme);
+  }
+  localStorage.setItem('app_theme', theme);
+  // sync radio
+  const radio = document.querySelector(`md-radio[value="${theme}"]`);
+  if (radio) radio.checked = true;
+}
+
+function initTheme() {
+  const saved = localStorage.getItem('app_theme') || 'system';
+  applyTheme(saved);
+}
+
+
+/* theme menu */
+document.getElementById('menu-theme').addEventListener('click', () => {
+  document.getElementById('menu-popup').open = false;
+  // sync radio to current theme
+  const cur = localStorage.getItem('app_theme') || 'system';
+  const radio = document.querySelector(`md-radio[value="${cur}"]`);
+  if (radio) radio.checked = true;
+  document.getElementById('theme-dialog').open = true;
+});
+document.getElementById('theme-close').addEventListener('click', () => {
+  document.getElementById('theme-dialog').open = false;
+});
+document.querySelectorAll('md-radio[name="theme"]').forEach(radio => {
+  radio.addEventListener('change', () => {
+    if (radio.checked) applyTheme(radio.value);
+  });
+});
+
+/* ── Init ── */
+async function init() {
+  initTheme();
+  setLang(lang);
+  const uids = await getUserIds();
+  if (!uids.includes(S.uid)) S.uid = uids[0];
+  renderUidStrip(uids);
+  await reloadSettings();
+  const loading = document.getElementById('loading');
+  loading.classList.add('fade-out');
+  setTimeout(() => loading.remove(), 350);
+  document.body.removeAttribute('unresolved');
+}
+
+init().catch(err => {
+  console.error(err);
+  document.getElementById('loading-text').textContent = 'Failed to load. Check root access.';
+});
+</script>
+</body>
 </html>
